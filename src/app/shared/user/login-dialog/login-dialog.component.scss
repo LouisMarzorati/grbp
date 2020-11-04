@@ -1,0 +1,33 @@
+::ng-deep.mat-dialog-container {
+  width: 100%;
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.login-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+
+  button {
+    margin-right: 8px;
+  }
+}
+
+button {
+  img {
+      width: 1.25em;
+  }
+}
+
+
+:host {
+  text-align: center;
+}
+
+.logout {
+  padding-top: 5em;
+}

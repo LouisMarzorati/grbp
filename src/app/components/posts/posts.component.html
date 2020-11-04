@@ -1,0 +1,45 @@
+<ng-container>
+  <div class="new-post">
+    <div appAudio [soundUrl]="'https://actions.google.com/sounds/v1/alarms/bugle_tune.ogg'"
+    class="sound">
+      trumponer'd
+    </div>
+    <div appAudio [soundUrl]="'https://actions.google.com/sounds/v1/human_voices/human_fart.ogg'"
+    class="sound">
+      squirt'd
+    </div>
+    <div appAudio [soundUrl]="'https://actions.google.com/sounds/v1/human_voices/baby_cry_cough.ogg'"
+    class="sound" >
+    bb'd
+    </div>
+
+    <form [formGroup]="postForm" (ngSubmit)="post()">
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="postText"
+          autocomplete="false"
+          type="text"
+          placeholder="sup?"
+          name="postText"/>
+      </mat-form-field>
+      <button type="submit" [disabled]="postForm.invalid">postit</button>
+    </form>
+  </div>
+  <div class="posts">
+    <div class="post" *ngFor="let post of posts">
+      <span class="poster"><b>{{post.username}}</b>:</span>
+      <span class="description">{{post.message}}</span>
+      <form [formGroup]="commentForm">
+
+      </form>
+      <div class="comments" *ngIf="!!post.comments && post.comments.length > 0">
+        <div *ngFor="let comment of post.comments" class="comment">
+          <span class="commenter">{{comment.username}}</span>
+          <br>
+          <span>{{comment.message}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

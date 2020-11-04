@@ -1,0 +1,12 @@
+@import './colors';
+
+$small-breakpoint: 576px;
+$medium-breakpoint: 768px;
+$large-breakpoint: 992px;
+$extra-large-breakpoint: 1200px;
+
+// sass-lint:disable no-color-keywords
+$colors: (
+  primary: #fff,
+  secondary: #faf
+)

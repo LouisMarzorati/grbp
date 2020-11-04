@@ -1,0 +1,29 @@
+<div class="account">
+  <h2>your account</h2>
+
+  <div class="account__info">
+    <span>email: {{user.email}}</span>
+    <span>email verified: {{user.emailVerified ? 'yeh' : 'nope'}}</span>
+    <span *ngIf="hasDisplayNameSet">display name: {{user.displayName}} | <a (click)="edit = !edit" class="update">update</a></span>
+    <div *ngIf="!hasDisplayNameSet || edit" class="set-display-name">
+      <span>{{edit ? 'update' : 'create'}} display name</span>
+      <form [formGroup]="displayNameForm" (ngSubmit)="update()">
+
+        <mat-form-field>
+          <mat-label>
+            display name
+          </mat-label>
+          <input
+            matInput
+            formControlName="displayName"
+            autocomplete="false"
+            type="text"
+            placeholder="Doints"
+            name="displayName"/>
+        </mat-form-field>
+        <button type="submit" [disabled]="displayNameForm.invalid">update</button>
+      </form>
+      <span>instagram handle</span>
+    </div>
+  </div>
+</div>

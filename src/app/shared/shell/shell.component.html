@@ -1,0 +1,21 @@
+<header>
+    <nav>
+      <ul class="main w-100">
+        <div class="flex spacer">
+          <li><a routerLink="/home" routerLinkActive="active">home</a></li>
+          <li><a routerLink="/about" routerLinkActive="active">about</a></li>
+          <li><a routerLink="/posts" routerLinkActive="active">posts</a></li>
+        </div>
+        <!--right align-->
+        <ng-container *ngIf="!(afAuth.authState | async)">
+          <li><a (click)="openLoginDialog()">login</a></li>
+        </ng-container>
+        <ng-container *ngIf="afAuth.authState | async as user">
+          <li>
+            <a routerLink="/account" routerLinkActive="active">hi {{!!user.displayName ? user.displayName : user.email}}</a>
+            <button (click)="afAuth.signOut()" class="small">signout</button>
+          </li>
+        </ng-container>
+      </ul>
+    </nav>
+</header>

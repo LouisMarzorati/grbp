@@ -1,0 +1,37 @@
+.posts {
+  display: flex;
+  flex-direction: column;
+}
+
+.post {
+  min-width: 10vw;
+  flex-direction: column;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border: 1px solid burlywood;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+.poster {
+  display: flex;
+  flex-direction: row;
+}
+
+.comments {
+  margin: 1rem;
+
+  .comment {
+    padding-bottom: .5rem;
+  }
+}
+
+.new-post {
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+}

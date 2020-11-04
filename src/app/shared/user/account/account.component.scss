@@ -1,0 +1,17 @@
+.account {
+  display: flex;
+  flex-direction: column;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .update {
+    font-weight: bold;
+    cursor: pointer;
+    color: red;
+  }
+}
