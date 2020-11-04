@@ -1,20 +1,16 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PostService implements OnInit {
+export class PostService {
 
   postsCollection: any;
   commentsCollection: any;
   unsubscribe: any;
 
-  constructor(private authService: AuthenticationService, private db: AngularFirestore) { }
-
-  ngOnInit() {
-  }
+  constructor(private db: AngularFirestore) { }
 
   createPost(message: string, user: firebase.default.User) {
       if (user) {
