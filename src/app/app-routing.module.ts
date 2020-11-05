@@ -8,6 +8,11 @@ import { AccountComponent } from './shared/user/account/account.component';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/home'
+  },
+  {
     path: 'home',
     component: HomeComponent
   },
@@ -26,7 +31,11 @@ const routes: Routes = [
   {
     path: 'account',
     component: AccountComponent
-  }
+  },
+  {
+    path: '**',
+    redirectTo: '/home'
+  },
 
 
 ];

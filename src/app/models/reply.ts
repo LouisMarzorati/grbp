@@ -1,11 +1,10 @@
-import { Reply } from './reply';
 import { User } from './user';
 
-export class Post {
+export class Reply {
   id?: string;
+  pid?: string;
   user?: User;
-  replies?: Reply[];
-  message?: string;
+  comment?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

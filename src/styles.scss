@@ -1,7 +1,12 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-.flex {
+.row {
   display: flex;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
 }
 
 .w-100 {
@@ -9,5 +14,20 @@
 }
 
 .sound {
+  border: 1px solid gray;
   cursor: pointer;
+  margin: 1rem;
+  padding: .5rem;
+  width: 10vw;
+  height: auto;
+  text-align: center;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.grow {
+  flex-grow: 1;
 }

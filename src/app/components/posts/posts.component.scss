@@ -4,9 +4,7 @@
 }
 
 .post {
-  min-width: 10vw;
-  flex-direction: column;
-  display: flex;
+  min-width: 50vw;
   align-content: center;
   justify-content: center;
   border: 1px solid burlywood;
@@ -20,18 +18,14 @@
 }
 
 .comments {
-  margin: 1rem;
+  border: 1px solid rgba(0,0,0,.42);
+  margin: 1rem 0;
+  padding: .5rem;
 
   .comment {
-    padding-bottom: .5rem;
+    margin-bottom: .5rem;
   }
-}
-
-.new-post {
-  form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+  .commenter {
+    font-weight: bold;
   }
 }

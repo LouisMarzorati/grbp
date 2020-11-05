@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as firebase from 'firebase';
 import { first } from 'rxjs/operators';
-import { Post } from 'src/app/models';
+import { Post } from 'src/app/models/post';
 import { PostService } from 'src/app/services/post.service';
 import { LoginDialogComponent } from 'src/app/shared/user/login-dialog/login-dialog.component';
 
@@ -48,10 +48,11 @@ export class PostsComponent implements OnInit {
     ref.orderBy("createdAt", "desc").onSnapshot((snapshot) => {
       this.posts = [];
       snapshot.forEach((doc) => {
-        this.posts.push(doc.data() as Post)
+        let p = doc.data() as Post;
+        p.id = doc.id;
+        this.posts.push(p)
       });
     });
-
   }
 
   async post(): Promise<void>{
@@ -71,17 +72,17 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  async comment(pid: string): Promise<void> {
+  async comment(post: Post): Promise<void> {
     const user = await this.isLoggedIn();
     if (user) {
-      this.postService.createComment(pid, this.commentForm.get('commentText').value);
+      this.postService.createComment(user, post.id, this.commentForm.get('commentText').value);
     } else {
       let dialogRef = this.dialog.open(LoginDialogComponent, {
         data: { }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.comment(pid);
+          this.comment(post);
         }
       });
     }
