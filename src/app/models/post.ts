@@ -8,4 +8,5 @@ export class Post {
   message?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  timeSince?: number;
 }

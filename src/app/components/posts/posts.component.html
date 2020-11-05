@@ -38,7 +38,7 @@
   </div>
   <div class="col center grow">
     <form [formGroup]="postForm" (ngSubmit)="post()">
-      <mat-form-field>
+      <mat-form-field floatLabel="never" class="post-form-field">
         <input
           matInput
           formControlName="postText"
@@ -54,11 +54,11 @@
       <div class="post" *ngFor="let post of posts">
         <div class="poster">
           <b>{{!!post.user.displayName ? post.user.displayName : 'no displayname yet'}}</b>
-          <span class="poster__time">{{post.createdAt | date:'medium'}}</span>
+          <span class="poster__time">{{post.createdAt | dateAgo}}</span>
         </div>
         <span class="description">{{post.message}}</span>
         <form [formGroup]="commentForm" (ngSubmit)="comment(post)">
-          <mat-form-field>
+          <mat-form-field floatLabel="never">
             <input
               matInput
               formControlName="commentText"
@@ -74,7 +74,7 @@
             <div *ngFor="let comment of post.replies" class="comment">
               <span class="commenter">{{!!comment.user.displayName ? comment.user.displayName : 'no displayname yet'}}</span>
               <br>
-              <span class="comment">{{comment.comment}}</span>
+              <span>{{comment.comment}}</span>
             </div>
           </div>
         </ng-container>

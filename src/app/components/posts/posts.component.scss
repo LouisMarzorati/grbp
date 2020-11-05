@@ -1,3 +1,5 @@
+@import '../../colors';
+
 .posts {
   display: flex;
   flex-direction: column;
@@ -7,7 +9,10 @@
   min-width: 50vw;
   align-content: center;
   justify-content: center;
-  border: 1px solid burlywood;
+  border: 1px solid $post;
+  border-radius: 1rem;
+  background: $post;
+  box-shadow: -3px 3px 9px 0px #ccc;
   padding: 1rem;
   margin: 0.5rem;
 }
@@ -23,14 +28,27 @@
 }
 
 .comments {
-  border: 1px solid rgba(0,0,0,.42);
   margin: 1rem 0;
   padding: .5rem;
 
   .comment {
+    border: 1px solid $comment;
+    box-shadow: -3px 3px 2px #e6e6e6;
+    background: $comment;
+    border-radius: 1rem;
     margin-bottom: .5rem;
+    padding: .75rem
   }
   .commenter {
     font-weight: bold;
   }
+}
+
+.post-form-field {
+  color: black;
+}
+
+button {
+  padding: 5px;
+  margin-left: 16px;
 }

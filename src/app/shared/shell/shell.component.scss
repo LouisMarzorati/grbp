@@ -1,4 +1,5 @@
 @import '../../mixins';
+@import '../../colors';
 
 nav {
   display: flex;
@@ -30,5 +31,5 @@ a {
 }
 
 .active {
-  color: purple;
+  color: $active-nav;
 }

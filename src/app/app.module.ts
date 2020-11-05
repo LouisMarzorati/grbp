@@ -11,14 +11,12 @@ import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { SharedModule } from './shared/shared.module';
-import { AudioDirective } from './directives/audio.directive';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AboutComponent,
-    PostsComponent,
-    AudioDirective
+    PostsComponent
   ],
   imports: [
     BrowserModule,

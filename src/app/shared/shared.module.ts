@@ -8,10 +8,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
+import { AudioDirective } from './directives/audio.directive';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { ShellComponent } from './shell/shell.component';
 
 
-const components = [ShellComponent]
+const components = [
+  ShellComponent,
+  AudioDirective,
+  DateAgoPipe
+]
 const modules = [
   CommonModule,
   RouterModule,
