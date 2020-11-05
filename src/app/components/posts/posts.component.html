@@ -52,7 +52,10 @@
 
     <div class="posts">
       <div class="post" *ngFor="let post of posts">
-        <span class="poster"><b>{{!!post.user.displayName ? post.user.displayName : 'no displayname yet'}}</b>:</span>
+        <div class="poster">
+          <b>{{!!post.user.displayName ? post.user.displayName : 'no displayname yet'}}</b>
+          <span class="poster__time">{{post.createdAt | date:'medium'}}</span>
+        </div>
         <span class="description">{{post.message}}</span>
         <form [formGroup]="commentForm" (ngSubmit)="comment(post)">
           <mat-form-field>

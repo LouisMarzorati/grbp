@@ -49,6 +49,7 @@ export class PostsComponent implements OnInit {
       this.posts = [];
       snapshot.forEach((doc) => {
         let p = doc.data() as Post;
+        p.createdAt = doc.data().createdAt.toDate();
         p.id = doc.id;
         this.posts.push(p)
       });

@@ -19,16 +19,14 @@ export class PostService {
 
   createPost(message: string, user: firebase.default.User) {
       if (user) {
-        const { serverTimestamp } = firebase.default.firestore.FieldValue;
-
         this.db.collection('posts').add({
             user: {
               uid: user.uid,
               displayName: this.getDisplayName(user)
             },
             message: message,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
       }
   }
