@@ -11,12 +11,16 @@ import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { SharedModule } from './shared/shared.module';
+import { RespondComponent } from './components/respond/respond.component';
+import { CommentsComponent } from './components/posts/comments/comments.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AboutComponent,
-    PostsComponent
+    PostsComponent,
+    RespondComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

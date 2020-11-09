@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { User } from '../models/user';
+import { UserInfo } from '../models';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,11 +21,11 @@ export class PostService {
   createPost(message: string, user: firebase.default.User) {
       if (user) {
         this.db.collection('posts').add({
-            user: {
+            userInfo: {
               uid: user.uid,
               displayName: this.getDisplayName(user)
             },
-            message: message,
+            post: message,
             createdAt: new Date(),
             updatedAt: new Date()
         });
@@ -39,20 +40,31 @@ export class PostService {
 
   }
 
-  createComment(user: firebase.default.User, pId: string, comment: string) {
+  createComment(user: firebase.default.User, pId: string, reply: string) {
     if (user && pId) {
-      var postRef = this.db.collection('posts').doc(pId);
-      postRef.update({
-          replies: firebase.default.firestore.FieldValue.arrayUnion({
-            pid: pId,
-            user: {
-              displayName: user.displayName,
-              uid: user.uid
-            } as User,
-            comment: comment,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          })
+      this.db.collection(`posts/${pId}/comments`).add({
+        pid: pId,
+        postComment: reply,
+        userInfo: {
+          displayName: user.displayName,
+          uid: user.uid
+        } as UserInfo,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }).then((doc) => {
+        console.log('comment', doc.id);
+      });
+    }
+  }
+
+  createReply(user: firebase.default.User, pId: string, cId: string, reply: string) {
+    if (user && pId) {
+      this.db.collection(`posts/${pId}/comments`).doc(cId).update({
+        replies: firebase.default.firestore.FieldValue.arrayUnion({
+          reply: reply,
+          displayName: user.displayName,
+          uid: user.uid
+        })
       });
     }
   }

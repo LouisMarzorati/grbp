@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
-import { SnackBarService } from '../../services/snack-bar.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 @Injectable({
   providedIn: 'root'
 })

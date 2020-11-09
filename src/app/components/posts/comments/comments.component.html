@@ -1,0 +1,63 @@
+<ng-container
+  *ngIf="!!post.comments && post.comments.length > 0"
+>
+  <div class="comments">
+    <div *ngFor="let comment of post.comments">
+      <div class="comment">
+        <span class="commenter">{{!!comment.userInfo.displayName ? comment.userInfo.displayName : 'no displayname yet'}}</span>
+        <br>
+        <span class="message">{{comment.postComment}}</span>
+
+        <ng-container *ngIf="!!comment.replies">
+          <div class="replies">
+            <div class="replies__reply" *ngFor="let reply of comment.replies">
+              <span><b>{{!!reply.displayName ? reply.displayName : 'no display name'}}</b></span>
+              <br>
+              <span class="indent">{{reply.reply}}</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <span class="comment-reply" (click)="setReplyField(comment)">reply</span>
+      <!--reply to comment-->
+      <form
+        class="comment-reply__form"
+        [formGroup]="replyForm"
+        (ngSubmit)="reply(post.id, comment.id)"
+        *ngIf="comment.id === selectedCommentId">
+      <mat-form-field floatLabel="never">
+        <input
+          matInput
+          formControlName='replyText'
+          autocomplete="false"
+          type="text"
+          placeholder="got somethin to say?"
+          name='replyText'/>
+      </mat-form-field>
+      <button type="submit" [disabled]="replyForm.invalid">reply</button>
+    </form>
+    </div>
+  </div>
+</ng-container>
+
+<div class="post-reply">
+  <div class="post-reply__reply">
+    <span (click)="setCommentField(post)">reply</span>
+    <form
+      class="post-reply__form"
+      [formGroup]="commentForm"
+      (ngSubmit)="comment(post)"
+      *ngIf="post.id === selectedReplyId">
+      <mat-form-field floatLabel="never">
+        <input
+          matInput
+          formControlName='commentText'
+          autocomplete="false"
+          type="text"
+          placeholder="got somethin to say?"
+          name='commentText'/>
+      </mat-form-field>
+      <button type="submit" [disabled]="commentForm.invalid">reply</button>
+    </form>
+  </div>
+</div>

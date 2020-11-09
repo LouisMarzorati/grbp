@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginDialogComponent } from '../user/login-dialog/login-dialog.component';
+import { LoginDialogComponent } from 'src/app/shared/user/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-shell',

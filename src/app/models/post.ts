@@ -1,12 +1,12 @@
-import { Reply } from './reply';
-import { User } from './user';
+import { PostComment } from './post-comment';
+import { UserInfo } from './user-info';
 
 export class Post {
   id?: string;
-  user?: User;
-  replies?: Reply[];
-  message?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  userInfo?: UserInfo;
+  comments?: PostComment[];
+  post?: string;
   timeSince?: number;
+  createdAt: Date;
+  updatedAt: Date;
 }

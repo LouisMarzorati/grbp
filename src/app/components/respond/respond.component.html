@@ -1,0 +1,15 @@
+<div class="respond">
+
+  <span (click)="selected = ''" *ngIf="selected != ''">X</span>
+  <span (click)="selected = 'sounds'" *ngIf="selected !== 'sounds'" >sounds</span>
+  <mat-form-field floatLabel="never" *ngIf="selected === 'sounds'" class="respond__sounds">
+    <mat-label>sounds</mat-label>
+    <mat-select (selectionChange)="playSound($event)">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let sound of sounds" [value]="sound">
+        {{sound.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>

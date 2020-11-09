@@ -3,8 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import * as firebase from 'firebase';
 import { first } from 'rxjs/operators';
+import { PostComment } from 'src/app/models';
 import { Post } from 'src/app/models/post';
 import { PostService } from 'src/app/services/post.service';
 import { LoginDialogComponent } from 'src/app/shared/user/login-dialog/login-dialog.component';
@@ -15,12 +15,11 @@ import { LoginDialogComponent } from 'src/app/shared/user/login-dialog/login-dia
   styleUrls: ['./posts.component.scss']
 })
 export class PostsComponent implements OnInit {
-  @Input() public home: boolean;
-  public postForm: FormGroup;
-  public commentForm: FormGroup;
+  @Input() home: boolean;
+  postForm: FormGroup;
 
-  public showLoggin: boolean;
-  public postText: string;
+  showLoggin: boolean;
+  postText: string;
 
   posts: Post[];
   constructor(
@@ -39,21 +38,25 @@ export class PostsComponent implements OnInit {
       postText: ['', Validators.required]
     });
 
-    this.commentForm = this.fb.group({
-      commentText: ['', Validators.required]
-    });
-
-
-    const ref = firebase.default.firestore().collection('posts');
-    ref.orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+    this.db.collection('posts').ref.onSnapshot((postSnapshot) => {
       this.posts = [];
-      snapshot.forEach((doc) => {
-        let p = doc.data() as Post;
-        p.createdAt = doc.data().createdAt.toDate();
-        p.id = doc.id;
-        this.posts.push(p)
+      postSnapshot.forEach((postDoc) => {
+        let post = postDoc.data() as Post;
+        post.createdAt = postDoc.data().createdAt.toDate();
+        post.id = postDoc.id;
+
+        postDoc.ref.collection('comments').onSnapshot((commentSnapshot) => {
+          post.comments = [];
+          commentSnapshot.forEach((commentDoc) => {
+            let comment = commentDoc.data() as PostComment;
+            comment.id = commentDoc.id;
+            post.comments.push(comment);
+          });
+        });
+        this.posts.push(post);
       });
     });
+
   }
 
   async post(): Promise<void>{
@@ -68,22 +71,6 @@ export class PostsComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.post();
-        }
-      });
-    }
-  }
-
-  async comment(post: Post): Promise<void> {
-    const user = await this.isLoggedIn();
-    if (user) {
-      this.postService.createComment(user, post.id, this.commentForm.get('commentText').value);
-    } else {
-      let dialogRef = this.dialog.open(LoginDialogComponent, {
-        data: { }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.comment(post);
         }
       });
     }

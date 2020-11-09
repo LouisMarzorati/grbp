@@ -1,41 +1,4 @@
 <div class="row w-100">
-  <div class="col">
-    <div
-      appAudio
-      [soundUrl]="'https://actions.google.com/sounds/v1/alarms/bugle_tune.ogg'"
-      class="sound"
-    >
-      trumponer
-    </div>
-    <div
-      appAudio
-      [soundUrl]="'https://actions.google.com/sounds/v1/human_voices/human_fart.ogg'"
-      class="sound"
-    >
-      squirt
-    </div>
-    <div
-     appAudio
-     [soundUrl]="'https://actions.google.com/sounds/v1/human_voices/baby_cry_cough.ogg'"
-      class="sound"
-    >
-    bb
-    </div>
-    <div
-    appAudio
-    [soundUrl]="'https://actions.google.com/sounds/v1/weapons/gunfire.ogg'"
-     class="sound"
-   >
-   ::blop blop::
-   </div>
-   <div
-   appAudio
-   [soundUrl]="'https://actions.google.com/sounds/v1/emergency/emergency_siren_short_burst.ogg'"
-    class="sound"
-  >
-    party police
-  </div>
-  </div>
   <div class="col center grow">
     <form [formGroup]="postForm" (ngSubmit)="post()">
       <mat-form-field floatLabel="never" class="post-form-field">
@@ -53,31 +16,13 @@
     <div class="posts">
       <div class="post" *ngFor="let post of posts">
         <div class="poster">
-          <b>{{!!post.user.displayName ? post.user.displayName : 'no displayname yet'}}</b>
+          <b>{{!!post.userInfo.displayName ? post.userInfo.displayName : 'no displayname yet'}}</b>
           <span class="poster__time">{{post.createdAt | dateAgo}}</span>
         </div>
-        <span class="description">{{post.message}}</span>
-        <form [formGroup]="commentForm" (ngSubmit)="comment(post)">
-          <mat-form-field floatLabel="never">
-            <input
-              matInput
-              formControlName="commentText"
-              autocomplete="false"
-              type="text"
-              placeholder="got somethin to say?"
-              name="postText"/>
-          </mat-form-field>
-          <button type="submit" [disabled]="commentForm.invalid">reply</button>
-        </form>
-        <ng-container *ngIf="!!post.replies && post.replies.length > 0">
-          <div class="comments">
-            <div *ngFor="let comment of post.replies" class="comment">
-              <span class="commenter">{{!!comment.user.displayName ? comment.user.displayName : 'no displayname yet'}}</span>
-              <br>
-              <span>{{comment.comment}}</span>
-            </div>
-          </div>
-        </ng-container>
+        <span class="description">{{post.post}}</span>
+        <app-comments [post]="post">
+
+        </app-comments>
       </div>
     </div>
   </div>

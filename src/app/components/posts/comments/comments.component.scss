@@ -1,0 +1,64 @@
+@import '../../../colors';
+
+.comments {
+  margin: 1rem 0;
+  padding: .5rem;
+
+  .comment {
+    border: 1px solid $comment;
+    box-shadow: inset -2px 3px 2px #e6e6e6;
+    background: $comment;
+    border-radius: 1rem;
+    margin-bottom: .5rem;
+    padding: .75rem;
+    width: fit-content;
+  }
+
+  .message {
+    margin-left: 8px;
+  }
+
+  .commenter {
+    font-weight: bold;
+  }
+
+  .comment-reply {
+    cursor: pointer;
+    color: $blue;
+    display: flex;
+    margin: -10px 0 12px 24px;
+  }
+}
+
+.post-reply {
+  display: flex;
+
+  &__reply {
+
+    span {
+      cursor: pointer;
+      color: $blue;
+    }
+    display: flex;
+    margin: .5rem;
+    border: 1px solid $comment;
+    background: $comment;
+    border-radius: 1rem;
+    margin-bottom: .5rem;
+    padding: .75rem;
+    width: 100%;
+  }
+
+  &__form {
+    height: 4vh;
+    margin-left: 1rem;
+  }
+}
+
+.replies {
+  border-top: 1px solid #000;
+  margin-top: 8px;
+  &__reply {
+    margin-left: 16px;
+  }
+}
