@@ -1,27 +1,8 @@
 .respond {
-    width: 25vw;
-    border: 1px solid black;
-    padding: .5rem;
-    border-radius: 1rem;
-    display: flex;
-    justify-content: space-evenly;
-    height: 2vh;
-
-    &__options {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      justify-content: flex-end;
-
-      span {
-        margin: 0 8px;
-        padding: 0 8px;
-        background: white;
-        border: 1px solid white;
-        border-radius: 1rem;
-        cursor: pointer;
-      }
-    }
+  width: 350px;
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
 
     &__sounds {
       height: 2vh;
@@ -30,11 +11,72 @@
       align-items: center;
       justify-content: center;
     }
-
-    span {
-      cursor: pointer;
-    }
 }
+
+.sound-select {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  border: 1px solid;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.options {
+  display: flex;
+  margin-top: 4px;
+
+  span {
+    margin: 0 8px;
+    padding: 0 8px;
+    background: #fff;
+    border: 1px solid #fff;
+    border-radius: .5rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+.options-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+
+  input {
+    border: 1px solid;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-grow: 1;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.reply-button {
+  display: flex;
+  border: 1px solid black;
+  padding: .5rem;
+  border-radius: .75rem;
+  align-items: center;
+  font-weight: bold;
+  height: 2vh;
+  margin-left: 8px;
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+.enabled {
+  cursor: pointer;
+  background-color: #fff;
+}
+
 
 .respond-row {
   display: flex;
@@ -43,19 +85,51 @@
 }
 
 .giphy-holder {
-  display: grid;
-  grid-template-columns: auto auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  height: 300px;
+}
+
+.s {
+  border: 1px solid;
+  padding: .5rem;
+  border-radius: .75rem;
+  cursor: pointer;
+  margin: .5rem;
 }
 
 .gif-size {
   max-width: 300px;
 }
 
+.sound-selected {
+  display: flex;
+  align-items: center;
+}
+
+.gif-selected {
+  display: flex;
+  align-items: center;
+  margin: .5rem;
+
+  img {
+    margin-right: 1rem;
+  }
+}
+
 .gif-search {
   display: flex;
-  flex-direction: column;
+  flex-grow: 1;
 
   input {
-    width: fit-content;
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    border: 1px solid;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
   }
 }

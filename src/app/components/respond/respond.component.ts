@@ -26,7 +26,7 @@ export class RespondComponent implements OnInit, OnDestroy {
   textInput: string;q
 
   sounds: Sound[];
-  selectedSound: string;
+  selectedSound: Sound;
 
   //TODO: move to env
   gf = new GiphyFetch("V5cjFqBDVVqOujeASAAHIFMbRLFJ4X7d");
@@ -80,7 +80,7 @@ export class RespondComponent implements OnInit, OnDestroy {
       } else if (!!this.reply) {
         console.log('submit reply')
       } else {
-        this.postService.createPost(hasTextInput ? this.textInput : null, user, this.selectedGif, this.selectedSound);
+        this.postService.createPost(hasTextInput ? this.textInput : null, user, this.selectedGif, this.selectedSound.url);
       }
       this.reset();
     } else {
@@ -93,7 +93,6 @@ export class RespondComponent implements OnInit, OnDestroy {
         }
       });
     }
-
   }
 
   reset() {
@@ -104,7 +103,7 @@ export class RespondComponent implements OnInit, OnDestroy {
   }
 
   get noSelection(): boolean {
-    return !!this.selectedOption == false;
+    return !!this.selectedOption === false;
   }
 
 
@@ -168,7 +167,7 @@ export class RespondComponent implements OnInit, OnDestroy {
 
   playSound($event: any) {
     if (!!$event.value.url) {
-      this.selectedSound = $event.value.url;
+      this.selectedSound = $event.value;
       const audio = new Audio($event.value.url);
       audio.play();
     } else {

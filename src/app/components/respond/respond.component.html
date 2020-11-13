@@ -1,5 +1,5 @@
-<div class="respond-row">
-  <div class="respond">
+<div class="respond">
+  <div class="input-row">
     <input
       type="text"
       placeholder="sup"
@@ -8,7 +8,48 @@
       *ngIf="noSelection"
       [(ngModel)]="textInput"
       />
-    <div class="respond__options">
+
+    <div class="sound-select" *ngIf="selectedOption == 'sound' && !!selectedSound == false">
+      <mat-form-field floatLabel="never" class="respond__sounds">
+        <mat-label>sounds</mat-label>
+        <mat-select (selectionChange)="playSound($event)">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let sound of sounds" [value]="sound" (click)="selectedOption = undefined">
+            {{sound.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <div *ngIf="selectedOption == 'gif' && !!selectedGif == false" class="col w-100">
+      <div class="gif-search">
+        <input [(ngModel)]="gifSearchText" (ngModelChange)="textModelChanged.next($event)" placeholder="search 4 good vibes"/>
+      </div>
+      <div *ngIf="!!gifs && !!gifs.data" class="giphy-holder">
+        <div *ngFor="let g of gifs.data">
+          <img src="{{g.images.original.url}}" alt="Image" class="gif-size pointer" (click)="setGifResponse(g.images.original.url); selectedOption = undefined;">
+        </div>
+      </div>
+    </div>
+  
+    
+    <span
+      class="pointer"
+      (click)="cancelResponse()"
+      *ngIf="noSelection == false && !!selectedSound == false && !!selectedGif == false">
+      X
+    </span>
+    
+    <div
+      class="reply-button"
+      [ngClass]="!!this.textInput || !!this.selectedGif || this.selectedSound ? 'enabled': ''"
+      *ngIf="selectedOption == undefined" >
+      <span (click)="submit()">sendit</span>
+    </div>
+  </div>
+
+  <div class="options-row">
+    <div class="options">
       <span
         (click)="selectedOption = 'sound'"
         *ngIf="noSelection" >
@@ -17,36 +58,18 @@
       <span
       (click)="selectedOption = 'gif'"
       *ngIf="noSelection" >
-      gif
-    </span>
+        gif
+      </span>
     </div>
-    <mat-form-field floatLabel="never" *ngIf="selectedOption == 'sound'" class="respond__sounds">
-      <mat-label>sounds</mat-label>
-      <mat-select (selectionChange)="playSound($event)">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let sound of sounds" [value]="sound">
-          {{sound.label}}
-        </mat-option>
-      <span click="grbp-button" (click)="selectedSound = undefined" *ngIf="selectedSound != undefined">nah</span>
-      </mat-select>
-
-    </mat-form-field>
-
-    <section *ngIf="selectedOption == 'gif' && !!selectedGif == false" class="gif-search">
-      <input [(ngModel)]="gifSearchText" (ngModelChange)="textModelChanged.next($event)"/>
-      <div *ngIf="!!gifs && !!gifs.data" class="giphy-holder">
-        <div *ngFor="let g of gifs.data">
-          <img src="{{g.images.original.url}}" alt="Image" class="gif-size pointer" (click)="setGifResponse(g.images.original.url)">
-        </div>
-      </div>
-    </section>
-    <div class="gif-result" *ngIf="!!selectedGif">
-      <img src="{{selectedGif}}" alt="Image" class="gif-size"/>
-      <span click="grbp-button" (click)="selectedGif = undefined">nah</span>
-    </div>
-    <span (click)="cancelResponse()" *ngIf="noSelection == false">X</span>
   </div>
-  <div class="grbp-button">
-    <span (click)="submit()">sendit</span>
+
+  <div class="sound-selected">
+    <span class="s" *ngIf="selectedSound != undefined" appAudio [soundUrl]="selectedSound.url">{{selectedSound.label}}</span>
+    <span class="pointer" (click)="selectedSound = undefined" *ngIf="selectedSound != undefined">X</span>
+  </div>
+
+  <div class="gif-selected" *ngIf="!!selectedGif">
+    <img src="{{selectedGif}}" alt="Image" class="gif-size"/>
+    <span class="pointer" (click)="selectedGif = undefined">X</span>
   </div>
 </div>
