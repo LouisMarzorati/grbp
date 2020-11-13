@@ -4,7 +4,8 @@ import { UserInfo } from './user-info';
 export class PostComment {
   id?: string;
   pid?: string;
-  userInfo?: UserInfo;
+  uid: string;
+  displayName: string;
   postComment?: string;
   replies?: CommentReply[];
   type: string;

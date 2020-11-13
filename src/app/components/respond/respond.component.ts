@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material/dialog';
-import { GifsResult, GiphyFetch } from "@giphy/js-fetch-api";
+import { GifsResult, GiphyFetch } from '@giphy/js-fetch-api';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, first } from 'rxjs/operators';
 import { CommentReply, Post, PostComment } from 'src/app/models';
@@ -18,18 +18,17 @@ export class RespondComponent implements OnInit, OnDestroy {
 
   @Input() post: Post;
   @Input() comment: PostComment;
-  @Input() reply: CommentReply;
 
   user: firebase.default.User;
 
   selectedOption: string;
-  textInput: string;q
+  textInput: string;
 
   sounds: Sound[];
   selectedSound: Sound;
 
-  //TODO: move to env
-  gf = new GiphyFetch("V5cjFqBDVVqOujeASAAHIFMbRLFJ4X7d");
+  // TODO: move to env
+  gf = new GiphyFetch('V5cjFqBDVVqOujeASAAHIFMbRLFJ4X7d');
 
   gifSearchText: string;
   textModelChanged: Subject<string> = new Subject<string>();
@@ -38,9 +37,7 @@ export class RespondComponent implements OnInit, OnDestroy {
   gifs: GifsResult;
   selectedGif: string;
 
-  constructor(private postService: PostService,
-    private dialog: MatDialog,
-    private afAuth: AngularFireAuth) { }
+  constructor(private postService: PostService, private dialog: MatDialog, private afAuth: AngularFireAuth) { }
 
   isLoggedIn() {
     return this.afAuth.authState.pipe(first()).toPromise();
@@ -48,21 +45,12 @@ export class RespondComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    if (!!this.comment) {
-      console.log('set comment form group')
-    } else if (!!this.reply) {
-      console.log('set reply form group')
-    } else {
-      console.log('set posts form group')
-    }
-
-
     this.textModelChangeSubscription = this.textModelChanged
     .pipe(
       debounceTime(1000),
     )
     .subscribe(newText => {
-      if (newText != '' && newText.length >= 1) {
+      if (newText !== '' && newText.length >= 1) {
         this.gifSearchText = newText;
         this.fetchGifs(this.gifSearchText, 0);
       }
@@ -74,17 +62,37 @@ export class RespondComponent implements OnInit, OnDestroy {
   async submit() {
     const user = await this.isLoggedIn();
     if (user) {
-      let hasTextInput =!!this.textInput && this.textInput.trim().length > 0;
-      if (!!this.comment) {
-        console.log('submit comment')
-      } else if (!!this.reply) {
-        console.log('submit reply')
+      const hasTextInput = !!this.textInput && this.textInput.trim().length > 0;
+      if (!!this.post) {
+        // creates a comment under post id
+        this.postService.createComment(
+          this.post.id,
+          hasTextInput ? this.textInput : null,
+          user,
+          this.selectedGif,
+          this.selectedSound.url
+        );
+      } else if (!!this.comment) {
+        // creates a reply under a post/comment id
+        this.postService.createReply(
+          this.comment.pid,
+          this.comment.id,
+          hasTextInput ? this.textInput : null,
+          user,
+          this.selectedGif,
+          this.selectedSound.url
+        );
       } else {
-        this.postService.createPost(hasTextInput ? this.textInput : null, user, this.selectedGif, this.selectedSound.url);
+        this.postService.createPost(
+          hasTextInput ? this.textInput : null,
+          user,
+          this.selectedGif,
+          this.selectedSound.url
+        );
       }
       this.reset();
     } else {
-      let dialogRef = this.dialog.open(LoginDialogComponent, {
+      const dialogRef = this.dialog.open(LoginDialogComponent, {
         data: { }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -128,13 +136,6 @@ export class RespondComponent implements OnInit, OnDestroy {
     this.selectedGif = undefined;
   }
 
-  setGifResponse(gif: string) {
-    this.selectedGif = gif;
-    console.log('girfurl', this.selectedGif);
-    //gif.images.original.url
-    // this.postService.createComment(this.user, this.postId, gifUrl, 'gif');
-  }
-
   setSounds(): void {
     this.sounds = [
       {
@@ -162,7 +163,7 @@ export class RespondComponent implements OnInit, OnDestroy {
         url: 'https://actions.google.com/sounds/v1/emergency/emergency_siren_short_burst.ogg',
         label: 'party police'
       }
-    ]
+    ];
   }
 
   playSound($event: any) {

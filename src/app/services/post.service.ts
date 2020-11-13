@@ -42,16 +42,15 @@ export class PostService {
 
   }
 
-  createComment(user: firebase.default.User, pId: string, reply: string, type: string) {
+  createComment(pId: string, reply: string, user: firebase.default.User, gifUrl?: string, soundUrl?: string) {
     if (user && pId) {
       this.db.collection(`posts/${pId}/comments`).add({
         pid: pId,
-        type: type,
         postComment: reply,
-        userInfo: {
-          displayName: user.displayName,
-          uid: user.uid
-        } as UserInfo,
+        displayName: user.displayName,
+        uid: user.uid,
+        gifUrl: !!gifUrl ? gifUrl : '',
+        soundUrl: !!soundUrl ? soundUrl : '',
         createdAt: new Date(),
         updatedAt: new Date()
       }).then((doc) => {
@@ -60,13 +59,18 @@ export class PostService {
     }
   }
 
-  createReply(user: firebase.default.User, pId: string, cId: string, reply: string) {
-    if (user && pId) {
+  createReply(pId: string, cId: string, reply: string, user: firebase.default.User, gifUrl?: string, soundUrl?: string) {
+    if (user && pId && cId) {
       this.db.collection(`posts/${pId}/comments`).doc(cId).update({
         replies: firebase.default.firestore.FieldValue.arrayUnion({
-          reply: reply,
+          pid: pId,
+          reply,
           displayName: user.displayName,
-          uid: user.uid
+          uid: user.uid,
+          gifUrl: !!gifUrl ? gifUrl : '',
+          soundUrl: !!soundUrl ? soundUrl : '',
+          createdAt: new Date(),
+          updatedAt: new Date()
         })
       });
     }
