@@ -7,6 +7,7 @@ export class PostComment {
   userInfo?: UserInfo;
   postComment?: string;
   replies?: CommentReply[];
+  type: string;
   createdAt: Date;
   updatedAt: Date;
 }

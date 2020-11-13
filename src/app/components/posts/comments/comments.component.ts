@@ -47,7 +47,7 @@ export class CommentsComponent implements OnInit {
   async comment(post: Post): Promise<void> {
     const user = await this.isLoggedIn();
     if (user) {
-      this.postService.createComment(user, post.id, this.commentForm.get('commentText').value);
+      this.postService.createComment(user, post.id, this.commentForm.get('commentText').value, 'text');
       this.commentForm.reset();
       this.selectedReplyId = '';
     } else {

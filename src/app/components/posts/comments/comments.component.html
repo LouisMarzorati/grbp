@@ -6,7 +6,13 @@
       <div class="comment">
         <span class="commenter">{{!!comment.userInfo.displayName ? comment.userInfo.displayName : 'no displayname yet'}}</span>
         <br>
-        <span class="message">{{comment.postComment}}</span>
+        <ng-container *ngIf="comment.type == 'text'">
+          <span class="message">{{comment.postComment}}</span>
+        </ng-container>
+
+        <ng-container *ngIf="comment.type == 'gif'">
+          <img src="{{comment.postComment}}" alt="Image"/>
+        </ng-container>
 
         <ng-container *ngIf="!!comment.replies">
           <div class="replies">

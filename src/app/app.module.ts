@@ -9,10 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
-import { PostsComponent } from './components/posts/posts.component';
-import { SharedModule } from './shared/shared.module';
-import { RespondComponent } from './components/respond/respond.component';
 import { CommentsComponent } from './components/posts/comments/comments.component';
+import { PostsComponent } from './components/posts/posts.component';
+import { RespondComponent } from './components/respond/respond.component';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +29,7 @@ import { CommentsComponent } from './components/posts/comments/comments.componen
     SharedModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireAuthModule,
+    AngularFireAuthModule
   ],
   bootstrap: [AppComponent]
 })

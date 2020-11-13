@@ -13,13 +13,31 @@
       <button type="submit" [disabled]="postForm.invalid">postit</button>
     </form>
 
+    <!-- <div *ngIf="tab == 'gif'">
+      <input [(ngModel)]="gifSearchText" (ngModelChange)="textModelChanged.next($event)"/>
+      <div *ngIf="!!gifs && !!gifs.data" class="giphy-holder">
+        <div *ngFor="let g of gifs.data">
+          <img src="{{g.images.original.url}}" alt="Image" class="img-responsive" (click)="setGifResponse(g.images.original.url)">
+        </div>
+      </div>
+    </div> -->
+
+
     <div class="posts">
       <div class="post" *ngFor="let post of posts">
         <div class="poster">
           <b>{{!!post.userInfo.displayName ? post.userInfo.displayName : 'no displayname yet'}}</b>
           <span class="poster__time">{{post.createdAt | dateAgo}}</span>
         </div>
-        <span class="description">{{post.post}}</span>
+        <ng-container *ngIf="!!post.post">
+          <span class="description">{{post.post}}</span>
+        </ng-container>
+        <ng-container *ngIf="!!post.gifUrl">
+          <span class="gif"><img src="{{post.gifUrl}}" alt="Image" class="gif-size"/></span>
+        </ng-container>
+        <ng-container *ngIf="!!post.soundUrl">
+          <span class="sound" appAudio [soundUrl]="post.soundUrl"> s o u n d</span>
+        </ng-container>
         <app-comments [post]="post">
 
         </app-comments>

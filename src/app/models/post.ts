@@ -6,6 +6,8 @@ export class Post {
   userInfo?: UserInfo;
   comments?: PostComment[];
   post?: string;
+  gifUrl?: string;
+  soundUrl?: string;
   timeSince?: number;
   createdAt: Date;
   updatedAt: Date;

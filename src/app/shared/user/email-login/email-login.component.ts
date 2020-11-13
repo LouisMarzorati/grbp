@@ -23,6 +23,7 @@ export class EmailLoginComponent implements OnInit {
     this.changeType('login');
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
+      displayName: ['', [Validators.required, Validators.minLength(3)]],
       password: [
         '',
         [Validators.minLength(6), Validators.required]

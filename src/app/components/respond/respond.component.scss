@@ -1,11 +1,27 @@
 .respond {
-  width: 25vw;
+    width: 25vw;
     border: 1px solid black;
     padding: .5rem;
     border-radius: 1rem;
     display: flex;
     justify-content: space-evenly;
     height: 2vh;
+
+    &__options {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: flex-end;
+
+      span {
+        margin: 0 8px;
+        padding: 0 8px;
+        background: white;
+        border: 1px solid white;
+        border-radius: 1rem;
+        cursor: pointer;
+      }
+    }
 
     &__sounds {
       height: 2vh;
@@ -18,4 +34,28 @@
     span {
       cursor: pointer;
     }
+}
+
+.respond-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.giphy-holder {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.gif-size {
+  max-width: 300px;
+}
+
+.gif-search {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    width: fit-content;
+  }
 }

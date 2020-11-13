@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -14,14 +14,18 @@ import { LoginDialogComponent } from 'src/app/shared/user/login-dialog/login-dia
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss']
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnDestroy {
   @Input() home: boolean;
   postForm: FormGroup;
 
   showLoggin: boolean;
   postText: string;
+  tab = 'text';
 
   posts: Post[];
+  postsSub: any;
+  commentsSub: any[];
+
   constructor(
     public afAuth: AngularFireAuth,
     private db: AngularFirestore,
@@ -37,15 +41,16 @@ export class PostsComponent implements OnInit {
     this.postForm = this.fb.group({
       postText: ['', Validators.required]
     });
+    this.commentsSub = []
 
-    this.db.collection('posts').ref.onSnapshot((postSnapshot) => {
+     this.postsSub = this.db.collection('posts').ref.onSnapshot((postSnapshot) => {
       this.posts = [];
       postSnapshot.forEach((postDoc) => {
         let post = postDoc.data() as Post;
         post.createdAt = postDoc.data().createdAt.toDate();
         post.id = postDoc.id;
 
-        postDoc.ref.collection('comments').onSnapshot((commentSnapshot) => {
+        let commentSub = postDoc.ref.collection('comments').onSnapshot((commentSnapshot) => {
           post.comments = [];
           commentSnapshot.forEach((commentDoc) => {
             let comment = commentDoc.data() as PostComment;
@@ -53,10 +58,19 @@ export class PostsComponent implements OnInit {
             post.comments.push(comment);
           });
         });
+
+        this.commentsSub.push(commentSub);
         this.posts.push(post);
       });
     });
+  }
 
+  // unsubscribe from post/comment listeners when user isnt on posts page
+  ngOnDestroy() {
+    this.postsSub();
+    this.commentsSub.forEach((s) => {
+      s();
+    })
   }
 
   async post(): Promise<void>{

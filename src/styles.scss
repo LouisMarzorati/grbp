@@ -17,6 +17,21 @@
   width: 100%;
 }
 
+.grbp-button {
+  display: flex;
+  border: 1px solid black;
+  padding: .5rem;
+  border-radius: 1rem;
+  align-items: center;
+  height: 2vh;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
 .sound {
   border: 1px solid gray;
   cursor: pointer;

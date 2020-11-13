@@ -18,7 +18,7 @@ export class PostService {
     return !!user.displayName ? user.displayName : user.email;
   }
 
-  createPost(message: string, user: firebase.default.User) {
+  createPost(message: string, user: firebase.default.User, gifUrl?: string, soundUrl?: string) {
       if (user) {
         this.db.collection('posts').add({
             userInfo: {
@@ -26,6 +26,8 @@ export class PostService {
               displayName: this.getDisplayName(user)
             },
             post: message,
+            gifUrl: !!gifUrl ? gifUrl : '',
+            soundUrl: !!soundUrl ? soundUrl : '',
             createdAt: new Date(),
             updatedAt: new Date()
         });
@@ -40,10 +42,11 @@ export class PostService {
 
   }
 
-  createComment(user: firebase.default.User, pId: string, reply: string) {
+  createComment(user: firebase.default.User, pId: string, reply: string, type: string) {
     if (user && pId) {
       this.db.collection(`posts/${pId}/comments`).add({
         pid: pId,
+        type: type,
         postComment: reply,
         userInfo: {
           displayName: user.displayName,
