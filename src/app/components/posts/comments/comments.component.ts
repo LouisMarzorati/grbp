@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
 import { CommentReply, Post } from 'src/app/models';
 import { PostService } from 'src/app/services/post.service';
-import { LoginDialogComponent } from 'src/app/shared/user/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-comments',
@@ -44,41 +43,41 @@ export class CommentsComponent implements OnInit {
     });
   }
 
-  async comment(post: Post): Promise<void> {
-    const user = await this.isLoggedIn();
-    if (user) {
-      this.postService.createComment(user, post.id, this.commentForm.get('commentText').value, 'text');
-      this.commentForm.reset();
-      this.selectedReplyId = '';
-    } else {
-      let dialogRef = this.dialog.open(LoginDialogComponent, {
-        data: { }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.comment(post);
-        }
-      });
-    }
-  }
+  // async comment(post: Post): Promise<void> {
+  //   const user = await this.isLoggedIn();
+  //   if (user) {
+  //     this.postService.createComment(post.id, this.commentForm.get('commentText').value, user, );
+  //     this.commentForm.reset();
+  //     this.selectedReplyId = '';
+  //   } else {
+  //     let dialogRef = this.dialog.open(LoginDialogComponent, {
+  //       data: { }
+  //     });
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       if (result) {
+  //         this.comment(post);
+  //       }
+  //     });
+  //   }
+  // }
 
-  async reply(postId: string, commentId: string): Promise<void> {
-    const user = await this.isLoggedIn();
-    if (user) {
-      this.postService.createReply(user, postId, commentId, this.replyForm.get('replyText').value);
-      this.replyForm.reset();
-      this.selectedCommentId = '';
-    } else {
-      let dialogRef = this.dialog.open(LoginDialogComponent, {
-        data: { }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.reply(postId, commentId);
-        }
-      });
-    }
-  }
+  // async reply(postId: string, commentId: string): Promise<void> {
+  //   const user = await this.isLoggedIn();
+  //   if (user) {
+  //     this.postService.createReply(user, postId, commentId, this.replyForm.get('replyText').value);
+  //     this.replyForm.reset();
+  //     this.selectedCommentId = '';
+  //   } else {
+  //     let dialogRef = this.dialog.open(LoginDialogComponent, {
+  //       data: { }
+  //     });
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       if (result) {
+  //         this.reply(postId, commentId);
+  //       }
+  //     });
+  //   }
+  // }
 
   setReplyField(comment: CommentReply) {
     // hide post reply button if user clicks it twice

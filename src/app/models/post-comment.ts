@@ -1,5 +1,4 @@
 import { CommentReply } from './comment-reply';
-import { UserInfo } from './user-info';
 
 export class PostComment {
   id?: string;
@@ -9,6 +8,8 @@ export class PostComment {
   postComment?: string;
   replies?: CommentReply[];
   type: string;
+  gifUrl: string;
+  soundUrl: string;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { GifsResult, GiphyFetch } from '@giphy/js-fetch-api';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, first } from 'rxjs/operators';
-import { CommentReply, Post, PostComment } from 'src/app/models';
+import { Post, PostComment } from 'src/app/models';
 import { Sound } from 'src/app/models/sound';
 import { PostService } from 'src/app/services/post.service';
 import { LoginDialogComponent } from 'src/app/shared/user/login-dialog/login-dialog.component';
@@ -69,8 +69,8 @@ export class RespondComponent implements OnInit, OnDestroy {
           this.post.id,
           hasTextInput ? this.textInput : null,
           user,
-          this.selectedGif,
-          this.selectedSound.url
+          !!this.selectedGif ? this.selectedGif : '',
+          !!this.selectedSound ? this.selectedSound.url : ''
         );
       } else if (!!this.comment) {
         // creates a reply under a post/comment id
@@ -79,15 +79,15 @@ export class RespondComponent implements OnInit, OnDestroy {
           this.comment.id,
           hasTextInput ? this.textInput : null,
           user,
-          this.selectedGif,
-          this.selectedSound.url
+          !!this.selectedGif ? this.selectedGif : '',
+          !!this.selectedSound ? this.selectedSound.url : ''
         );
       } else {
         this.postService.createPost(
           hasTextInput ? this.textInput : null,
           user,
-          this.selectedGif,
-          this.selectedSound.url
+          !!this.selectedGif ? this.selectedGif : '',
+          !!this.selectedSound ? this.selectedSound.url : ''
         );
       }
       this.reset();

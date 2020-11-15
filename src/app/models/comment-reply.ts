@@ -5,6 +5,8 @@ export class CommentReply {
   pid?: string;
   uid: string;
   displayName: string;
+  gifUrl: string;
+  soundUrl: string;
   reply?: string;
   createdAt: Date;
   updatedAt: Date;
