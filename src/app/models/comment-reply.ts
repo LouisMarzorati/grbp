@@ -1,3 +1,4 @@
+import { Sound } from '.';
 
 export class CommentReply {
   id?: string;
@@ -6,7 +7,7 @@ export class CommentReply {
   uid: string;
   displayName: string;
   gifUrl: string;
-  soundUrl: string;
+  sound: Sound;
   reply?: string;
   createdAt: Date;
   updatedAt: Date;

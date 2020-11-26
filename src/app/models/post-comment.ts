@@ -1,3 +1,4 @@
+import { Sound } from '.';
 import { CommentReply } from './comment-reply';
 
 export class PostComment {
@@ -9,7 +10,7 @@ export class PostComment {
   replies?: CommentReply[];
   type: string;
   gifUrl: string;
-  soundUrl: string;
+  sound: Sound;
   createdAt: Date;
   updatedAt: Date;
 }

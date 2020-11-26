@@ -7,15 +7,19 @@
           <b>{{!!post.userInfo.displayName ? post.userInfo.displayName : 'no displayname yet'}}</b>
           <span class="poster__time">{{post.createdAt | dateAgo}}</span>
         </div>
-        <ng-container *ngIf="!!post.post">
-          <span class="description">{{post.post}}</span>
-        </ng-container>
-        <ng-container *ngIf="!!post.gifUrl">
-          <span class="gif"><img src="{{post.gifUrl}}" alt="Image" class="gif-size"/></span>
-        </ng-container>
-        <ng-container *ngIf="!!post.soundUrl">
-          <span class="sound" appAudio [soundUrl]="post.soundUrl"> s o u n d</span>
-        </ng-container>
+        <div class="col center">
+          <ng-container *ngIf="!!post.post">
+            <span class="description">{{post.post}}</span>
+          </ng-container>
+          <ng-container *ngIf="!!post.gifUrl">
+            <span class="gif"><img src="{{post.gifUrl}}" alt="Image" class="gif-size"/></span>
+          </ng-container>
+          <ng-container *ngIf="!!post.sound">
+            <div class="sound-spacer">
+              <span class="sound" appAudio [soundUrl]="post.sound.url">~ {{post.sound.label}} ~</span>
+            </div>
+          </ng-container>
+        </div>
         <app-comments [post]="post">
 
         </app-comments>

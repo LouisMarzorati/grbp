@@ -69,8 +69,8 @@ export class RespondComponent implements OnInit, OnDestroy {
           this.post.id,
           hasTextInput ? this.textInput : null,
           user,
-          !!this.selectedGif ? this.selectedGif : '',
-          !!this.selectedSound ? this.selectedSound.url : ''
+          this.selectedGif,
+          this.selectedSound
         );
       } else if (!!this.comment) {
         // creates a reply under a post/comment id
@@ -79,15 +79,15 @@ export class RespondComponent implements OnInit, OnDestroy {
           this.comment.id,
           hasTextInput ? this.textInput : null,
           user,
-          !!this.selectedGif ? this.selectedGif : '',
-          !!this.selectedSound ? this.selectedSound.url : ''
+          this.selectedGif,
+          this.selectedSound
         );
       } else {
         this.postService.createPost(
           hasTextInput ? this.textInput : null,
           user,
-          !!this.selectedGif ? this.selectedGif : '',
-          !!this.selectedSound ? this.selectedSound.url : ''
+          this.selectedGif,
+          this.selectedSound
         );
       }
       this.reset();

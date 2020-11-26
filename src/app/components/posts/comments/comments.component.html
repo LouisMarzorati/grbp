@@ -12,8 +12,10 @@
         <ng-container *ngIf="!!comment.gifUrl">
           <span class="gif"><img src="{{comment.gifUrl}}" alt="Image" class="gif-size"/></span>
         </ng-container>
-        <ng-container *ngIf="!!comment.soundUrl">
-          <span class="sound" appAudio [soundUrl]="comment.soundUrl"> s o u n d</span>
+        <ng-container *ngIf="!!comment.sound">
+          <div class="sound-spacer">
+            <span class="sound" appAudio [soundUrl]="comment.sound.url">~ {{comment.sound.label}} ~</span>
+          </div>
         </ng-container>
 
         <ng-container *ngIf="!!comment.replies">
@@ -27,8 +29,10 @@
               <ng-container *ngIf="!!reply.gifUrl">
                 <span class="gif"><img src="{{reply.gifUrl}}" alt="Image" class="gif-size"/></span>
               </ng-container>
-              <ng-container *ngIf="!!reply.soundUrl">
-                <span class="sound" appAudio [soundUrl]="reply.soundUrl"> s o u n d</span>
+              <ng-container *ngIf="!!reply.sound">
+                <div class="sound-spacer">
+                  <span class="sound" appAudio [soundUrl]="reply.sound.url">~ {{reply.sound.label}} ~</span>
+                </div>
               </ng-container>
             </div>
           </div>
