@@ -4,14 +4,18 @@
   <div class="comments">
     <div *ngFor="let comment of post.comments">
       <div class="comment">
-        <span class="commenter">{{!!comment.userInfo.displayName ? comment.userInfo.displayName : 'no displayname yet'}}</span>
+        <span class="commenter">{{!!comment.displayName ? comment.displayName : 'no displayname yet'}}</span>
         <br>
-        <ng-container *ngIf="comment.type == 'text'">
-          <span class="message">{{comment.postComment}}</span>
+        <ng-container *ngIf="!!comment.postComment">
+          <span class="description">{{comment.postComment}}</span>
         </ng-container>
-
-        <ng-container *ngIf="comment.type == 'gif'">
-          <img src="{{comment.postComment}}" alt="Image"/>
+        <ng-container *ngIf="!!comment.gifUrl">
+          <span class="gif"><img src="{{comment.gifUrl}}" alt="Image" class="gif-size"/></span>
+        </ng-container>
+        <ng-container *ngIf="!!comment.sound">
+          <div class="sound-spacer">
+            <span class="sound" appAudio [soundUrl]="comment.sound.url">~ {{comment.sound.label}} ~</span>
+          </div>
         </ng-container>
 
         <ng-container *ngIf="!!comment.replies">
@@ -19,29 +23,30 @@
             <div class="replies__reply" *ngFor="let reply of comment.replies">
               <span><b>{{!!reply.displayName ? reply.displayName : 'no display name'}}</b></span>
               <br>
-              <span class="indent">{{reply.reply}}</span>
+              <ng-container *ngIf="!!reply.reply">
+                <span class="indent description">{{reply.reply}}</span>
+              </ng-container>
+              <ng-container *ngIf="!!reply.gifUrl">
+                <span class="gif"><img src="{{reply.gifUrl}}" alt="Image" class="gif-size"/></span>
+              </ng-container>
+              <ng-container *ngIf="!!reply.sound">
+                <div class="sound-spacer">
+                  <span class="sound" appAudio [soundUrl]="reply.sound.url">~ {{reply.sound.label}} ~</span>
+                </div>
+              </ng-container>
             </div>
           </div>
         </ng-container>
       </div>
       <span class="comment-reply" (click)="setReplyField(comment)">reply</span>
       <!--reply to comment-->
-      <form
+      <div
         class="comment-reply__form"
-        [formGroup]="replyForm"
-        (ngSubmit)="reply(post.id, comment.id)"
         *ngIf="comment.id === selectedCommentId">
-      <mat-form-field floatLabel="never">
-        <input
-          matInput
-          formControlName='replyText'
-          autocomplete="false"
-          type="text"
-          placeholder="got somethin to say?"
-          name='replyText'/>
-      </mat-form-field>
-      <button type="submit" [disabled]="replyForm.invalid">reply</button>
-    </form>
+        <app-respond [comment]="comment">
+
+        </app-respond>
+      </div>
     </div>
   </div>
 </ng-container>
@@ -49,21 +54,12 @@
 <div class="post-reply">
   <div class="post-reply__reply">
     <span (click)="setCommentField(post)">reply</span>
-    <form
+    <div
       class="post-reply__form"
-      [formGroup]="commentForm"
-      (ngSubmit)="comment(post)"
       *ngIf="post.id === selectedReplyId">
-      <mat-form-field floatLabel="never">
-        <input
-          matInput
-          formControlName='commentText'
-          autocomplete="false"
-          type="text"
-          placeholder="got somethin to say?"
-          name='commentText'/>
-      </mat-form-field>
-      <button type="submit" [disabled]="commentForm.invalid">reply</button>
-    </form>
+      <app-respond [post]="post">
+
+      </app-respond>
+    </div>
   </div>
 </div>

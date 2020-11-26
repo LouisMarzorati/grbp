@@ -11,6 +11,7 @@ export class AudioDirective {
 
   @HostListener('click')
   onclick() {
+
     const audio = new Audio(this.soundUrl);
     audio.play();
   }

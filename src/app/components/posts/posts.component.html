@@ -1,43 +1,25 @@
 <div class="row w-100">
   <div class="col center grow">
-    <form [formGroup]="postForm" (ngSubmit)="post()">
-      <mat-form-field floatLabel="never" class="post-form-field">
-        <input
-          matInput
-          formControlName="postText"
-          autocomplete="false"
-          type="text"
-          placeholder="sup?"
-          name="postText"/>
-      </mat-form-field>
-      <button type="submit" [disabled]="postForm.invalid">postit</button>
-    </form>
-
-    <!-- <div *ngIf="tab == 'gif'">
-      <input [(ngModel)]="gifSearchText" (ngModelChange)="textModelChanged.next($event)"/>
-      <div *ngIf="!!gifs && !!gifs.data" class="giphy-holder">
-        <div *ngFor="let g of gifs.data">
-          <img src="{{g.images.original.url}}" alt="Image" class="img-responsive" (click)="setGifResponse(g.images.original.url)">
-        </div>
-      </div>
-    </div> -->
-
-
+    <app-respond></app-respond>
     <div class="posts">
       <div class="post" *ngFor="let post of posts">
         <div class="poster">
           <b>{{!!post.userInfo.displayName ? post.userInfo.displayName : 'no displayname yet'}}</b>
           <span class="poster__time">{{post.createdAt | dateAgo}}</span>
         </div>
-        <ng-container *ngIf="!!post.post">
-          <span class="description">{{post.post}}</span>
-        </ng-container>
-        <ng-container *ngIf="!!post.gifUrl">
-          <span class="gif"><img src="{{post.gifUrl}}" alt="Image" class="gif-size"/></span>
-        </ng-container>
-        <ng-container *ngIf="!!post.soundUrl">
-          <span class="sound" appAudio [soundUrl]="post.soundUrl"> s o u n d</span>
-        </ng-container>
+        <div class="col center">
+          <ng-container *ngIf="!!post.post">
+            <span class="description">{{post.post}}</span>
+          </ng-container>
+          <ng-container *ngIf="!!post.gifUrl">
+            <span class="gif"><img src="{{post.gifUrl}}" alt="Image" class="gif-size"/></span>
+          </ng-container>
+          <ng-container *ngIf="!!post.sound">
+            <div class="sound-spacer">
+              <span class="sound" appAudio [soundUrl]="post.sound.url">~ {{post.sound.label}} ~</span>
+            </div>
+          </ng-container>
+        </div>
         <app-comments [post]="post">
 
         </app-comments>

@@ -1,7 +1,7 @@
 <div class="account">
   <h2>your account</h2>
 
-  <div class="account__info">
+  <div class="account__info" *ngIf="!!user">
     <span>email: {{user.email}}</span>
     <span>email verified: {{user.emailVerified ? 'yeh' : 'nope'}}</span>
     <span *ngIf="hasDisplayNameSet">display name: {{user.displayName}} | <a (click)="edit = !edit" class="update">update</a></span>

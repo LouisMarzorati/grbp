@@ -1,10 +1,16 @@
 @import '../../colors';
+@import '../../mixins';
 
 .posts {
   display: flex;
   flex-direction: column;
   .post {
-    min-width: 50vw;
+    @include mobile {
+      width: 85vw;
+    }
+    display: flex;
+    flex-direction: column;
+    width: 850px;
     align-content: center;
     justify-content: center;
     border: 1px solid $post;
