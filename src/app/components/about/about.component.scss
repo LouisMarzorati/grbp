@@ -15,11 +15,18 @@
   &__info {
     font-size: 1rem;
     font-weight: 300;
-    margin-bottom: 1.5rem;
     padding: 1rem 0;
     display: flex;
-    flex-direction: column;
+    width: 95vw;
+    align-content: center;
+    justify-content: center;
   }
+}
+
+.external-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
 }
 
 
