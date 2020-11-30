@@ -27,8 +27,7 @@ export class EmailLoginComponent implements OnInit {
       password: [
         '',
         [Validators.minLength(6), Validators.required]
-      ],
-      passwordConfirm: ['', []]
+      ]
     });
   }
 
@@ -53,18 +52,6 @@ export class EmailLoginComponent implements OnInit {
   }
   get password() {
     return this.form.get('password');
-  }
-
-  get passwordConfirm() {
-    return this.form.get('passwordConfirm');
-  }
-
-  get passwordDoesMatch() {
-    if (this.type !== 'signup') {
-      return true;
-    } else {
-      return this.password.value === this.passwordConfirm.value;
-    }
   }
 
   async onSubmit() {

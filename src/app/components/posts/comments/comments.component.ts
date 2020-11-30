@@ -1,12 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
 import { CommentReply, Post } from 'src/app/models';
-import { PostService } from 'src/app/services/post.service';
-import { LoginDialogComponent } from 'src/app/shared/user/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-comments',
@@ -23,10 +19,7 @@ export class CommentsComponent implements OnInit {
 
   constructor(
     public afAuth: AngularFireAuth,
-    private db: AngularFirestore,
-    private fb: FormBuilder,
-    private dialog: MatDialog,
-    private postService: PostService
+    private fb: FormBuilder
   ) { }
 
   isLoggedIn() {
@@ -42,42 +35,6 @@ export class CommentsComponent implements OnInit {
     this.replyForm = this.fb.group({
       replyText: ['', Validators.required]
     });
-  }
-
-  async comment(post: Post): Promise<void> {
-    const user = await this.isLoggedIn();
-    if (user) {
-      this.postService.createComment(user, post.id, this.commentForm.get('commentText').value, 'text');
-      this.commentForm.reset();
-      this.selectedReplyId = '';
-    } else {
-      let dialogRef = this.dialog.open(LoginDialogComponent, {
-        data: { }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.comment(post);
-        }
-      });
-    }
-  }
-
-  async reply(postId: string, commentId: string): Promise<void> {
-    const user = await this.isLoggedIn();
-    if (user) {
-      this.postService.createReply(user, postId, commentId, this.replyForm.get('replyText').value);
-      this.replyForm.reset();
-      this.selectedCommentId = '';
-    } else {
-      let dialogRef = this.dialog.open(LoginDialogComponent, {
-        data: { }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.reply(postId, commentId);
-        }
-      });
-    }
   }
 
   setReplyField(comment: CommentReply) {

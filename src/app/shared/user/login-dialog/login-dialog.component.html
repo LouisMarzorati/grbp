@@ -1,10 +1,10 @@
-<div>
-  <h1 mat-dialog-title>login</h1>
-  <div class="login-options">
+<div class="login-wrapper">
+  <h1 mat-dialog-title>who dis</h1>
+  <!-- <div class="login-options">
     <button appGoogleSignin>
       Login with Google
     </button>
-  </div>
+  </div> -->
   <div mat-dialog-content>
     <div *ngIf="isSignup">
       <h3>Create Account</h3>
@@ -55,26 +55,9 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field
-        [color]="passwordDoesMatch ? 'accent' : 'warn'"
-        *ngIf="isSignup"
-      >
-      <span>confirm password</span>
-        <input
-          matInput
-          formControlName="passwordConfirm"
-          type="password"
-          autocomplete="off"
-        />
-
-        <mat-error *ngIf="passwordConfirm.dirty && !passwordDoesMatch">
-          Password does not match
-        </mat-error>
-      </mat-form-field>
-
       <mat-error class="server-error">{{ serverMessage }}</mat-error>
 
-      <div mat-dialog-actions>
+      <div mat-dialog-actions class="col">
         <button
           *ngIf="isPasswordReset"
           mat-stroked-button
@@ -89,7 +72,7 @@
           mat-raised-button
           color="accent"
           type="submit"
-          [disabled]="form.invalid || !passwordDoesMatch || loading"
+          [disabled]="form.invalid || loading"
         >
           Submit
         </button>

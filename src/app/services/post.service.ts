@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { UserInfo } from '../models';
+import { Sound } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class PostService {
     return !!user.displayName ? user.displayName : user.email;
   }
 
-  createPost(message: string, user: firebase.default.User, gifUrl?: string, soundUrl?: string) {
+  createPost(message: string, user: firebase.default.User, gifUrl?: string, sound?: Sound) {
       if (user) {
         this.db.collection('posts').add({
             userInfo: {
@@ -26,8 +26,11 @@ export class PostService {
               displayName: this.getDisplayName(user)
             },
             post: message,
-            gifUrl: !!gifUrl ? gifUrl : '',
-            soundUrl: !!soundUrl ? soundUrl : '',
+            gifUrl: !!gifUrl ? gifUrl : null,
+            sound: !!sound ? {
+              label: sound.label,
+              url: sound.url
+            } : null,
             createdAt: new Date(),
             updatedAt: new Date()
         });
@@ -42,16 +45,18 @@ export class PostService {
 
   }
 
-  createComment(user: firebase.default.User, pId: string, reply: string, type: string) {
+  createComment(pId: string, reply: string, user: firebase.default.User, gifUrl?: string, sound?: Sound) {
     if (user && pId) {
       this.db.collection(`posts/${pId}/comments`).add({
         pid: pId,
-        type: type,
         postComment: reply,
-        userInfo: {
-          displayName: user.displayName,
-          uid: user.uid
-        } as UserInfo,
+        displayName: user.displayName,
+        uid: user.uid,
+        gifUrl: !!gifUrl ? gifUrl : '',
+        sound: !!sound ? {
+          label: sound.label,
+          url: sound.url
+        } : null,
         createdAt: new Date(),
         updatedAt: new Date()
       }).then((doc) => {
@@ -60,13 +65,21 @@ export class PostService {
     }
   }
 
-  createReply(user: firebase.default.User, pId: string, cId: string, reply: string) {
-    if (user && pId) {
+  createReply(pId: string, cId: string, reply: string, user: firebase.default.User, gifUrl?: string, sound?: Sound) {
+    if (user && pId && cId) {
       this.db.collection(`posts/${pId}/comments`).doc(cId).update({
         replies: firebase.default.firestore.FieldValue.arrayUnion({
-          reply: reply,
+          pid: pId,
+          reply,
           displayName: user.displayName,
-          uid: user.uid
+          uid: user.uid,
+          gifUrl: !!gifUrl ? gifUrl : '',
+          sound: !!sound ? {
+            label: sound.label,
+            url: sound.url
+          } : null,
+          createdAt: new Date(),
+          updatedAt: new Date()
         })
       });
     }

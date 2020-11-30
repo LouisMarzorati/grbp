@@ -1,3 +1,4 @@
+import { Sound } from '.';
 import { PostComment } from './post-comment';
 import { UserInfo } from './user-info';
 
@@ -7,7 +8,7 @@ export class Post {
   comments?: PostComment[];
   post?: string;
   gifUrl?: string;
-  soundUrl?: string;
+  sound?: Sound;
   timeSince?: number;
   createdAt: Date;
   updatedAt: Date;

@@ -27,7 +27,7 @@
       </div>
       <div *ngIf="!!gifs && !!gifs.data" class="giphy-holder">
         <div *ngFor="let g of gifs.data">
-          <img src="{{g.images.original.url}}" alt="Image" class="gif-size pointer" (click)="setGifResponse(g.images.original.url); selectedOption = undefined;">
+          <img src="{{g.images.original.url}}" alt="Image" class="gif-size pointer" (click)="selectedGif = g.images.original.url; selectedOption = undefined;">
         </div>
       </div>
     </div>

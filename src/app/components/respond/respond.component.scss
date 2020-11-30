@@ -110,13 +110,11 @@
 }
 
 .gif-selected {
+  z-index: 10;
+  background: lightgrey;
+  padding: 2rem;
   display: flex;
   align-items: center;
-  margin: .5rem;
-
-  img {
-    margin-right: 1rem;
-  }
 }
 
 .gif-search {
